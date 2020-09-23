@@ -19,30 +19,36 @@
         <span>{{ poll.ansB }}({{ poll.voteB }})</span>
       </div>
       <div>
-        <Button
-          type="secondary"
-          @click="deletemypoll(poll._id, index)"
-          :flat="false"
-        >
+        <Button type="secondary" @click="deletePoll()" :flat="false">
           Delete
         </Button>
       </div>
     </div>
   </Card>
+  <template v-if="isModalOpen">
+    <Modal
+      @cancel="isModalOpen = false"
+      @deletemypoll="this.$emit('deletemypoll', index)"
+      :id="poll._id"
+      :index="index"
+    />
+  </template>
 </template>
 <script>
 import axios from "axios";
 import { baseURL } from "../baseUrl";
 import Card from "./shared/Card.vue";
 import Button from "./shared/Button.vue";
+import Modal from "./shared/Modal.vue";
 
 export default {
   props: ["poll", "index"],
-  //   data() {
-  //     return {
-  //       mypoll: this.poll,
-  //     };
-  //   },
+  emits: ["deletemypoll","castVote"],
+  data() {
+    return {
+      isModalOpen: false,
+    };
+  },
   methods: {
     async castVote(id, option) {
       const res = await axios.patch(`${baseURL}/update`, {
@@ -51,13 +57,8 @@ export default {
       });
       this.$emit("castVote", { id, option });
     },
-    async deletemypoll(id, index) {
-      const res = await axios({
-        method: "delete",
-        url: `${baseURL}/delete`,
-        data: { id },
-      });
-      this.$emit("deletemypoll", index);
+    deletePoll() {
+      this.isModalOpen = true;
     },
   },
   computed: {
@@ -74,6 +75,7 @@ export default {
   components: {
     Card,
     Button,
+    Modal,
   },
 };
 </script>

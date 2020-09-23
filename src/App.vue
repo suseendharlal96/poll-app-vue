@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     castVote(data) {
-      console.log(data);
       const pollsCopy = [...this.polls];
       const pollIndex = pollsCopy.findIndex((p) => p._id === data.id);
       if (data.option === "A") {
@@ -60,7 +59,6 @@ export default {
   async mounted() {
     const res = await axios.get(baseURL);
     this.polls = res.data.polls;
-    console.log(res.data.polls);
   },
   created() {
     this.activeItem = this.items[0];

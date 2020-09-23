@@ -43,7 +43,6 @@ export default {
       e.preventDefault();
       if (this.isValid) {
         const res = await axios.post(`${baseURL}/create`, this.form);
-        console.log(1, res.data.poll);
         this.$emit("addNewPoll", res.data.poll);
         this.errors = { ...this.errors, ques: "", ansA: "", ansB: "" };
       } else {

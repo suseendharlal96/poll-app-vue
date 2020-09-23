@@ -19,12 +19,6 @@
 <script>
 export default {
   props: ["items", "activeItem"],
-  methods: {
-    // setActiveItem(index) {
-    //   console.log(index);
-    //   this.$emit("setActiveItem", index);
-    // },
-  },
 };
 </script>
 

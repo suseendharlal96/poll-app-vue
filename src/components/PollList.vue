@@ -22,22 +22,10 @@
 <script>
 import PollDetail from "./PollDetail.vue";
 export default {
-  props: {
-    polls: {
-      type: Array,
-      required: true,
-    },
-  },
+  emits: ["deletemypoll", "castVote"],
+  props: ["polls"],
   components: {
     PollDetail,
-  },
-  methods: {
-    // castVote(e) {
-    //   console.log(e);
-    // },
-  },
-  mounted() {
-    console.log(this.polls);
   },
 };
 </script>
