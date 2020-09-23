@@ -1,42 +1,65 @@
 <template>
   <Card>
     <div class="mypoll">
-      <template v-if="poll">
-        <h3>{{ poll.ques }}</h3>
-        <p>TotalVotes:{{ total }}</p>
-        <div class="answer">
-          <div
-            :style="'width: ' + percentA + '% !important'"
-            class="percent percent-a"
-          />
-          <span>{{ poll.ansA }}({{ poll.voteA }})</span>
-        </div>
-        <div class="answer">
-          <div
-            :style="'width: ' + percentA + '% !important'"
-            class="percent percent-b"
-          />
-          <span>{{ poll.ansB }}({{ poll.voteB }})</span>
-        </div>
-        <div>
-          <!-- <Button type="secondary"> Delete </Button> -->
-        </div>
-      </template>
+      <h3>{{ poll.ques }}</h3>
+      <p>TotalVotes:{{ total }}</p>
+      {{ poll.ansA }}({{ poll.voteA }}) {{ poll.ansB }}({{ poll.voteB }})
+      <div @click="castVote(poll._id, 'A')" class="answer">
+        <div
+          :style="'width: ' + percentA + '% !important'"
+          class="percent percent-a"
+        />
+        <span>{{ poll.ansA }}({{ poll.voteA }})</span>
+      </div>
+      <div @click="castVote(poll._id, 'B')" class="answer">
+        <div
+          :style="'width: ' + percentB + '% !important'"
+          class="percent percent-b"
+        />
+        <span>{{ poll.ansB }}({{ poll.voteB }})</span>
+      </div>
+      <div>
+        <Button
+          type="secondary"
+          @click="deletemypoll(poll._id, index)"
+          :flat="false"
+        >
+          Delete
+        </Button>
+      </div>
     </div>
   </Card>
-  <!-- // :click="castVote(mypoll._id, 'A')"
-// :click="deletemypoll(mypoll._id)" -->
 </template>
 <script>
+import axios from "axios";
+import { baseURL } from "../baseUrl";
 import Card from "./shared/Card.vue";
+import Button from "./shared/Button.vue";
 
 export default {
-  props: ["poll"],
+  props: ["poll", "index"],
   //   data() {
   //     return {
   //       mypoll: this.poll,
   //     };
   //   },
+  methods: {
+    async castVote(id, option) {
+      const res = await axios.patch(`${baseURL}/update`, {
+        id,
+        voteFor: option,
+      });
+      this.$emit("castVote", { id, option });
+    },
+    async deletemypoll(id, index) {
+      const res = await axios({
+        method: "delete",
+        url: `${baseURL}/delete`,
+        data: { id },
+      });
+      this.$emit("deletemypoll", index);
+    },
+  },
   computed: {
     total: function () {
       return this.poll ? this.poll.voteA + this.poll.voteB : null;
@@ -50,6 +73,7 @@ export default {
   },
   components: {
     Card,
+    Button,
   },
 };
 </script>
@@ -77,6 +101,7 @@ p {
 span {
   display: inline-block;
   padding: 10px 20px;
+  z-index: 999;
 }
 .percent {
   height: 100%;

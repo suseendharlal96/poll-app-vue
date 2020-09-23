@@ -1,11 +1,16 @@
 <template>
   <div class="poll-list">
-    <template v-if="polls.length > 0">
-      <div v-for="item in polls" :key="item._id">
-        <PollDetail :poll="item" />
+    <template v-if="polls && polls.length > 0">
+      <div v-for="(item, index) in polls" :key="item._id">
+        <PollDetail
+          @castVote="this.$emit('castVote', $event)"
+          :poll="item"
+          :index="index"
+          @deletemypoll="this.$emit('deletemypoll', $event)"
+        />
       </div>
     </template>
-    <template v-else-if="polls.length === 0">
+    <template v-else-if="polls && polls.length === 0">
       <p>Create a poll</p>
     </template>
     <template v-else>
@@ -25,6 +30,11 @@ export default {
   },
   components: {
     PollDetail,
+  },
+  methods: {
+    // castVote(e) {
+    //   console.log(e);
+    // },
   },
   mounted() {
     console.log(this.polls);
