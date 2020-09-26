@@ -32,15 +32,11 @@ import axios from "axios";
 import { baseURL } from "../../baseUrl";
 export default {
   props: ["index", "id"],
-  emits:['deletemypoll','cancel'],
+  emits: ["deletemypoll", "cancel"],
   methods: {
-    async deletePoll() {
-      const res = await axios({
-        method: "delete",
-        url: `${baseURL}/delete`,
-        data: { id: this.id },
-      });
-      this.$emit("deletemypoll", this.index);
+    deletePoll() {
+      this.$store.dispatch("deletePoll", { id: this.id });
+      this.$emit("deletemypoll");
     },
   },
 };

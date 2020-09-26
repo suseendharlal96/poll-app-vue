@@ -1,13 +1,9 @@
 <template>
   <div class="poll-list">
+    <!-- {{ JSON.stringify(polls, null, 4) }} -->
     <template v-if="polls && polls.length > 0">
       <div v-for="(item, index) in polls" :key="item._id">
-        <PollDetail
-          @castVote="this.$emit('castVote', $event)"
-          :poll="item"
-          :index="index"
-          @deletemypoll="this.$emit('deletemypoll', $event)"
-        />
+        <PollDetail :poll="item" :index="index" />
       </div>
     </template>
     <template v-else-if="polls && polls.length === 0">
@@ -20,12 +16,27 @@
 </template>
 
 <script>
+import axios from "axios";
 import PollDetail from "./PollDetail.vue";
+import { baseURL } from "../baseUrl";
 export default {
   emits: ["deletemypoll", "castVote"],
-  props: ["polls"],
+  // data() {
+  //   return {
+  //     polls: null,
+  //   };
+  // },
+  // props: ["polls"],
   components: {
     PollDetail,
+  },
+  computed: {
+    polls() {
+      return this.$store.getters.getPolls;
+    },
+  },
+  mounted() {
+    this.$store.dispatch("getPolls");
   },
 };
 </script>

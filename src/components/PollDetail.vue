@@ -28,7 +28,7 @@
   <template v-if="isModalOpen">
     <Modal
       @cancel="isModalOpen = false"
-      @deletemypoll="this.$emit('deletemypoll', index)"
+      @deletemypoll="isModalOpen = false"
       :id="poll._id"
       :index="index"
     />
@@ -43,19 +43,14 @@ import Modal from "./shared/Modal.vue";
 
 export default {
   props: ["poll", "index"],
-  emits: ["deletemypoll","castVote"],
   data() {
     return {
       isModalOpen: false,
     };
   },
   methods: {
-    async castVote(id, option) {
-      const res = await axios.patch(`${baseURL}/update`, {
-        id,
-        voteFor: option,
-      });
-      this.$emit("castVote", { id, option });
+    castVote(id, option) {
+      this.$store.dispatch("castVote", { id, option });
     },
     deletePoll() {
       this.isModalOpen = true;
@@ -63,13 +58,13 @@ export default {
   },
   computed: {
     total: function () {
-      return this.poll ? this.poll.voteA + this.poll.voteB : null;
+      return this.$store.getters.getTotal({ pollId: this.poll._id });
     },
     percentA: function () {
-      return this.poll ? (this.poll.voteA / this.total) * 100 : null;
+      return this.$store.getters.getPercentA({ pollId: this.poll._id });
     },
     percentB: function () {
-      return this.poll ? (this.poll.voteB / this.total) * 100 : null;
+      return this.$store.getters.getPercentB({ pollId: this.poll._id });
     },
   },
   components: {

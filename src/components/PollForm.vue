@@ -24,6 +24,7 @@ import axios from "axios";
 import Button from "./shared/Button.vue";
 import { baseURL } from "../baseUrl";
 export default {
+  emits: ["addNewPoll"],
   data() {
     return {
       form: {
@@ -39,11 +40,11 @@ export default {
     };
   },
   methods: {
-    async createPoll(e) {
+    createPoll(e) {
       e.preventDefault();
       if (this.isValid) {
-        const res = await axios.post(`${baseURL}/create`, this.form);
-        this.$emit("addNewPoll", res.data.poll);
+        this.$store.dispatch("createPoll", { poll: this.form });
+        this.$emit("addNewPoll");
         this.errors = { ...this.errors, ques: "", ansA: "", ansB: "" };
       } else {
         if (this.form.ques === "") {
