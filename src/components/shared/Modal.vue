@@ -35,7 +35,7 @@ export default {
   emits: ["deletemypoll", "cancel"],
   methods: {
     deletePoll() {
-      this.$store.dispatch("deletePoll", { id: this.id });
+      this.$store.dispatch("polls/deletePoll", { id: this.id });
       this.$emit("deletemypoll");
     },
   },

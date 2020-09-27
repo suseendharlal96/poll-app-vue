@@ -43,7 +43,7 @@ export default {
     createPoll(e) {
       e.preventDefault();
       if (this.isValid) {
-        this.$store.dispatch("createPoll", { poll: this.form });
+        this.$store.dispatch("polls/createPoll", { poll: this.form });
         this.$emit("addNewPoll");
         this.errors = { ...this.errors, ques: "", ansA: "", ansB: "" };
       } else {

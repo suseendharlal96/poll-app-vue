@@ -19,14 +19,14 @@ export default {
   methods: {
     unregister(registration) {
       this.$store.commit({
-        type: "unregister",
+        type: "registrations/unregister",
         userId: registration.userId,
       });
     },
   },
   computed: mapGetters({
-    registrations: "getRegistrations",
-    total: "getTotalRegistrations",
+    registrations: "registrations/getRegistrations",
+    total: "registrations/getTotalRegistrations",
   }),
 };
 </script>

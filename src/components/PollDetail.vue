@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     castVote(id, option) {
-      this.$store.dispatch("castVote", { id, option });
+      this.$store.dispatch("polls/castVote", { id, option });
     },
     deletePoll() {
       this.isModalOpen = true;
@@ -58,13 +58,17 @@ export default {
   },
   computed: {
     total: function () {
-      return this.$store.getters.getTotal({ pollId: this.poll._id });
+      return this.$store.getters["polls/getTotal"]({ pollId: this.poll._id });
     },
     percentA: function () {
-      return this.$store.getters.getPercentA({ pollId: this.poll._id });
+      return this.$store.getters["polls/getPercentA"]({
+        pollId: this.poll._id,
+      });
     },
     percentB: function () {
-      return this.$store.getters.getPercentB({ pollId: this.poll._id });
+      return this.$store.getters["polls/getPercentB"]({
+        pollId: this.poll._id,
+      });
     },
   },
   components: {

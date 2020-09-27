@@ -13,12 +13,12 @@
 export default {
   computed: {
     users() {
-      return this.$store.getters.getUnregisteredUsers;
+      return this.$store.getters["registrations/getUnregisteredUsers"];
     },
   },
   methods: {
     registerUser(user) {
-      this.$store.commit("register", { userId: user.id });
+      this.$store.commit("registrations/register", { userId: user.id });
     },
   },
 };

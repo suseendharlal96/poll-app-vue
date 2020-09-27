@@ -32,11 +32,11 @@ export default {
   },
   computed: {
     polls() {
-      return this.$store.getters.getPolls;
+      return this.$store.getters["polls/getPolls"];
     },
   },
   mounted() {
-    this.$store.dispatch("getPolls");
+    this.$store.dispatch("polls/getPolls");
   },
 };
 </script>
