@@ -1,19 +1,31 @@
-// import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
-// import PollForm from "../components/PollForm.vue";
+import PollList from "../components/PollList.vue";
+import PollForm from "../components/PollForm.vue";
 
-// const routes = [
-//   {
-//     path: "/",
-//     component: SampleList,
-//   },
-//   {
-//     path: "/create",
-//     component: PollForm,
-//   },
-// ];
+const routes = [
+  {
+    path: "/polls",
+    component: PollList,
+    children: [
+      {
+        path: "/polls/:id/delete",
+        component: PollList,
+      },
+    ],
+  },
+  {
+    path: "/create",
+    component: PollForm,
+  },
+  {
+    // new in vue3 for 404 routes
+    path: "/:pathMatch(.*)*",
+    redirect: "/polls",
+  },
+];
 
-// export const router = createRouter({
-//   history: createWebHistory(),
-//   routes,
-// });
+export const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});

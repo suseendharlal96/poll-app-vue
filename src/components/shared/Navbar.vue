@@ -1,24 +1,35 @@
 <template>
   <div class="tabs">
     <ul>
-      <template v-for="(item, index) in items" :key="item">
+      <template v-for="(item, index) in items" :key="index">
         <li>
           <div
-            @click="this.$emit('setActiveItem', index)"
-            :class="[item === activeItem ? 'active' : '']"
+            @click="navigate(item.to)"
+            :class="[item.to === activeItem ? 'active' : '']"
           >
-            {{ item }}
+            {{ item.name }}
           </div>
         </li>
       </template>
     </ul>
   </div>
+  <!-- :class="[item === activeItem ? 'active' : '']" -->
   <!-- on:click={() => dispatch('setActiveItem', i) -->
 </template>
 
 <script>
 export default {
-  props: ["items", "activeItem"],
+  props: ["items"],
+  methods: {
+    navigate(to) {
+      this.$router.push(to);
+    },
+  },
+  computed: {
+    activeItem() {
+      return this.$route.path ? this.$route.path : "";
+    },
+  },
 };
 </script>
 

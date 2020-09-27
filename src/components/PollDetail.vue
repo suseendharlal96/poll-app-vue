@@ -19,7 +19,7 @@
         <span>{{ poll.ansB }}({{ poll.voteB }})</span>
       </div>
       <div>
-        <Button type="secondary" @click="deletePoll()" :flat="false">
+        <Button type="secondary" @click="deletePoll(poll._id)" :flat="false">
           Delete
         </Button>
       </div>
@@ -27,8 +27,8 @@
   </Card>
   <template v-if="isModalOpen">
     <Modal
-      @cancel="isModalOpen = false"
-      @deletemypoll="isModalOpen = false"
+      @cancel="cancel"
+      @deletemypoll="deleted"
       :id="poll._id"
       :index="index"
     />
@@ -52,8 +52,17 @@ export default {
     castVote(id, option) {
       this.$store.dispatch("polls/castVote", { id, option });
     },
-    deletePoll() {
+    deletePoll(id) {
       this.isModalOpen = true;
+      this.$router.push(`${this.$route.path}/${id}/delete`);
+    },
+    cancel() {
+      this.isModalOpen = false;
+      this.$router.push("/polls");
+    },
+    deleted() {
+      this.isModalOpen = false;
+      this.$router.push("/polls");
     },
   },
   computed: {

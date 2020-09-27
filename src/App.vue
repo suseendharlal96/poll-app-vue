@@ -1,16 +1,13 @@
 <template>
   <main>
-    <Navbar
-      :items="items"
-      :activeItem="activeItem"
-      @setActiveItem="activeItem = items[$event]"
-    />
-    <template v-if="activeItem === items[0]">
+    <Navbar :items="items" />
+    <!-- <template v-if="activeItem === items[0]">
       <poll-list />
     </template>
     <template v-else>
       <poll-form @addNewPoll="activeItem = items[0]"></poll-form>
-    </template>
+    </template> -->
+    <router-view />
   </main>
 </template>
 
@@ -25,17 +22,16 @@ import { baseURL } from "./baseUrl";
 export default {
   data() {
     return {
-      items: ["Current Polls", "Add New Poll"],
-      activeItem: "",
+      items: [
+        { name: "Current Polls", to: "/polls" },
+        { name: "Add New Poll", to: "/create" },
+      ],
     };
   },
   components: {
     PollList,
     PollForm,
     Navbar,
-  },
-  mounted() {
-    this.activeItem = this.items[0];
   },
 };
 </script>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { baseURL } from "../baseUrl";
 
 const actions = {
+  // POLLS
   getPolls: async ({ commit }) => {
     const res = await axios.get(baseURL);
     commit("getPolls", { polls: res.data.polls });
