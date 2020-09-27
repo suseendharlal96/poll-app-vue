@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import PollList from "../components/PollList.vue";
-import PollForm from "../components/PollForm.vue";
+const PollForm = () => import("../components/PollForm.vue");
 
 const routes = [
   {
@@ -26,6 +26,7 @@ const routes = [
 ];
 
 export const router = createRouter({
+   // new in vue3 for history mode
   history: createWebHistory(),
   routes,
 });

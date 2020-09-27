@@ -23,7 +23,6 @@
         </div>
       </div>
     </div>
-    <!-- <p>modal</p> -->
   </teleport>
 </template>
 
@@ -86,7 +85,7 @@ button:hover {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: #474e5d;
+  background: rgba(233, 48, 16, 0.2);
   padding-top: 50px;
 }
 

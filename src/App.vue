@@ -7,7 +7,11 @@
     <template v-else>
       <poll-form @addNewPoll="activeItem = items[0]"></poll-form>
     </template> -->
-    <router-view />
+    <router-view v-slot="slotProps">
+      <transition name="slide-left">
+        <component :is="slotProps.Component" />
+      </transition>
+    </router-view>
   </main>
 </template>
 
