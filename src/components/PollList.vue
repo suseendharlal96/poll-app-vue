@@ -20,13 +20,6 @@ import axios from "axios";
 import PollDetail from "./PollDetail.vue";
 import { baseURL } from "../baseUrl";
 export default {
-  emits: ["deletemypoll", "castVote"],
-  // data() {
-  //   return {
-  //     polls: null,
-  //   };
-  // },
-  // props: ["polls"],
   components: {
     PollDetail,
   },

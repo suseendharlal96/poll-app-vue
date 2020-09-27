@@ -13,7 +13,6 @@ const actions = {
     commit("createPoll", { poll: res.data.poll });
   },
   deletePoll: async ({ commit }, { id }) => {
-    console.log(id);
     await axios({
       method: "delete",
       url: `${baseURL}/delete`,

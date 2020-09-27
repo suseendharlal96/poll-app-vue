@@ -13,8 +13,6 @@
       </template>
     </ul>
   </div>
-  <!-- :class="[item === activeItem ? 'active' : '']" -->
-  <!-- on:click={() => dispatch('setActiveItem', i) -->
 </template>
 
 <script>
