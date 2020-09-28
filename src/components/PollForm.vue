@@ -91,59 +91,6 @@ export default {
       isValid,
     };
   },
-  // data() {
-  //   return {
-  //     // form: {
-  //     //   ques: "",
-  //     //   ansA: "",
-  //     //   ansB: "",
-  //     // },
-  //     errors: {
-  //       ques: "",
-  //       ansA: "",
-  //       ansB: "",
-  //     },
-  //   };
-  // },
-  // methods: {
-  //   createPoll(e) {
-  //     e.preventDefault();
-  //     if (this.isValid) {
-  //       this.$store.dispatch("polls/createPoll", { poll: this.form });
-  //       this.$emit("addNewPoll");
-  //       this.errors = { ...this.errors, ques: "", ansA: "", ansB: "" };
-  //     } else {
-  //       if (this.form.ques === "") {
-  //         this.errors.ques = "Required Field";
-  //       } else {
-  //         this.errors.ques = "";
-  //       }
-  //       if (this.form.ansA === "") {
-  //         this.errors.ansA = "Required Field";
-  //       } else {
-  //         this.errors.ansA = "";
-  //       }
-  //       if (this.form.ansB === "") {
-  //         this.errors.ansB = "Required Field";
-  //       } else {
-  //         this.errors.ansB = "";
-  //       }
-  //     }
-  //   },
-  // },
-  // computed: {
-  //   isValid() {
-  //     if (
-  //       this.form.ques !== "" &&
-  //       this.form.ansA !== "" &&
-  //       this.form.ansB !== ""
-  //     ) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   },
-  // },
   components: {
     Button,
   },
