@@ -15,7 +15,7 @@
       <input type="text" v-model.lazy.trim="form.ansB" id="ans-b" />
       <div class="error">{{ errors.ansB }}</div>
     </div>
-    <Button type="primary">Add Poll</Button>
+    <button>Add poll</button>
   </form>
 </template>
 
@@ -60,7 +60,6 @@ export default {
     });
     const createPoll = (e) => {
       e.preventDefault();
-      console.log(store);
       if (isValid.value) {
         store.dispatch("polls/createPoll", { poll: form.value });
         errors = { ...errors, ques: "", ansA: "", ansB: "" };
