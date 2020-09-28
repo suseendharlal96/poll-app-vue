@@ -9,7 +9,8 @@ const routes = [
     component: PollList,
     children: [
       {
-        path: "/polls/:id/delete",
+        // will be treated as /polls/:id/delete
+        path: ":id/delete",
         component: PollList,
       },
     ],
@@ -26,7 +27,7 @@ const routes = [
 ];
 
 export const router = createRouter({
-   // new in vue3 for history mode
+  // new in vue3 for history mode
   history: createWebHistory(),
   routes,
 });
