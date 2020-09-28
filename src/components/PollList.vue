@@ -7,7 +7,7 @@
       </div>
     </template>
     <template v-else-if="polls && polls.length === 0">
-      <p>Create a poll</p>
+      <p>Create a new poll</p>
     </template>
     <template v-else>
       <p>Loading...</p>
