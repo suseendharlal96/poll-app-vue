@@ -1,22 +1,5 @@
 <template>
-  <form @submit="createPoll">
-    <div class="form-field">
-      <label for="question">Poll Ques</label>
-      <input type="text" v-model.lazy.trim="form.ques" id="question" />
-      <div class="error">{{ errors.ques }}</div>
-    </div>
-    <div class="form-field">
-      <label for="ans-a">Ans A</label>
-      <input type="text" v-model.lazy.trim="form.ansA" id="ans-a" />
-      <div class="error">{{ errors.ansA }}</div>
-    </div>
-    <div class="form-field">
-      <label for="ans-b">Ans B</label>
-      <input type="text" v-model.lazy.trim="form.ansB" id="ans-b" />
-      <div class="error">{{ errors.ansB }}</div>
-    </div>
-    <button>Add poll</button>
-  </form>
+  <p>form</p>
 </template>
 
 <script>
