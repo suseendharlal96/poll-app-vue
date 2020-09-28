@@ -25,6 +25,7 @@ export default {
     },
   },
   computed: mapGetters({
+    // using the store module concept
     registrations: "registrations/getRegistrations",
     total: "registrations/getTotalRegistrations",
   }),

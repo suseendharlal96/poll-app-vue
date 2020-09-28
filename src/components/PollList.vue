@@ -16,20 +16,32 @@
 </template>
 
 <script>
+import { onMounted, computed, inject } from "vue";
+
 import axios from "axios";
+
 import PollDetail from "./PollDetail.vue";
+
 import { baseURL } from "../baseUrl";
+
 export default {
+  setup() {
+    // injected from App.vue
+    const store = inject("$store");
+
+    const polls = computed(() => {
+      // using store module concept
+      return store.getters["polls/getPolls"];
+    });
+    onMounted(() => {
+      // using store module concept
+      store.dispatch("polls/getPolls");
+    });
+
+    return { polls };
+  },
   components: {
     PollDetail,
-  },
-  computed: {
-    polls() {
-      return this.$store.getters["polls/getPolls"];
-    },
-  },
-  mounted() {
-    this.$store.dispatch("polls/getPolls");
   },
 };
 </script>

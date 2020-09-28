@@ -35,50 +35,68 @@
   </template>
 </template>
 <script>
+import { ref, computed, inject } from "vue";
+
 import axios from "axios";
-import { baseURL } from "../baseUrl";
+
 import Card from "./shared/Card.vue";
 import Button from "./shared/Button.vue";
 import Modal from "./shared/Modal.vue";
 
+import { baseURL } from "../baseUrl";
+
 export default {
   props: ["poll", "index"],
-  data() {
-    return {
-      isModalOpen: false,
+  setup(props) {
+    const poll = props.poll;
+    const isModalOpen = ref(false);
+    // injected from App.vue
+    const store = inject("$store");
+    const router = inject("$router");
+
+    const castVote = (id, option) => {
+      store.dispatch("polls/castVote", { id, option });
     };
-  },
-  methods: {
-    castVote(id, option) {
-      this.$store.dispatch("polls/castVote", { id, option });
-    },
-    deletePoll(id) {
-      this.isModalOpen = true;
-      this.$router.push(`${this.$route.path}/${id}/delete`);
-    },
-    cancel() {
-      this.isModalOpen = false;
-      this.$router.push("/polls");
-    },
-    deleted() {
-      this.isModalOpen = false;
-      this.$router.push("/polls");
-    },
-  },
-  computed: {
-    total: function () {
-      return this.$store.getters["polls/getTotal"]({ pollId: this.poll._id });
-    },
-    percentA: function () {
-      return this.$store.getters["polls/getPercentA"]({
-        pollId: this.poll._id,
+    const deletePoll = (id) => {
+      isModalOpen.value = true;
+      router.push(`${router.currentRoute._rawValue.path}/${id}/delete`);
+    };
+    const cancel = () => {
+      isModalOpen.value = false;
+      router.push("/polls");
+    };
+    const deleted = () => {
+      isModalOpen.value = false;
+      router.push("/polls");
+    };
+
+    const total = computed(() => {
+      return store.getters["polls/getTotal"]({ pollId: props.poll._id });
+    });
+
+    const percentA = computed(() => {
+      return store.getters["polls/getPercentA"]({
+        pollId: props.poll._id,
       });
-    },
-    percentB: function () {
-      return this.$store.getters["polls/getPercentB"]({
-        pollId: this.poll._id,
+    });
+
+    const percentB = computed(() => {
+      return store.getters["polls/getPercentB"]({
+        pollId: props.poll._id,
       });
-    },
+    });
+
+    return {
+      poll,
+      isModalOpen,
+      castVote,
+      deletePoll,
+      cancel,
+      deleted,
+      total,
+      percentA,
+      percentB,
+    };
   },
   components: {
     Card,
