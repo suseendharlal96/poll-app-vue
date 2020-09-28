@@ -15,68 +15,80 @@
       <input type="text" v-model.lazy.trim="form.ansB" id="ans-b" />
       <div class="error">{{ errors.ansB }}</div>
     </div>
-    <Button type="primary">Add Poll</Button>
+    <button>Add poll</button>
   </form>
 </template>
 
 <script>
+import { ref, reactive, computed, inject } from "vue";
+
 import axios from "axios";
+
 import Button from "./shared/Button.vue";
+
 import { baseURL } from "../baseUrl";
+
 export default {
-  emits: ["addNewPoll"],
-  data() {
-    return {
-      form: {
-        ques: "",
-        ansA: "",
-        ansB: "",
-      },
-      errors: {
-        ques: "",
-        ansA: "",
-        ansB: "",
-      },
-    };
-  },
-  methods: {
-    createPoll(e) {
-      e.preventDefault();
-      if (this.isValid) {
-        this.$store.dispatch("polls/createPoll", { poll: this.form });
-        this.$emit("addNewPoll");
-        this.errors = { ...this.errors, ques: "", ansA: "", ansB: "" };
-      } else {
-        if (this.form.ques === "") {
-          this.errors.ques = "Required Field";
-        } else {
-          this.errors.ques = "";
-        }
-        if (this.form.ansA === "") {
-          this.errors.ansA = "Required Field";
-        } else {
-          this.errors.ansA = "";
-        }
-        if (this.form.ansB === "") {
-          this.errors.ansB = "Required Field";
-        } else {
-          this.errors.ansB = "";
-        }
-      }
-    },
-  },
-  computed: {
-    isValid() {
+  // emits: ["addNewPoll"],
+  setup() {
+    const form = ref({
+      ques: "",
+      ansA: "",
+      ansB: "",
+    });
+    let errors = reactive({
+      ques: "",
+      ansA: "",
+      ansB: "",
+    });
+    // injected from App.vue
+    const store = inject("$store");
+    const router = inject("$router");
+
+    // for ref and computed,
+    // we have to access the data from .value property(not required in template)
+    const isValid = computed(() => {
       if (
-        this.form.ques !== "" &&
-        this.form.ansA !== "" &&
-        this.form.ansB !== ""
+        form.value.ques !== "" &&
+        form.value.ansA !== "" &&
+        form.value.ansB !== ""
       ) {
         return true;
       } else {
         return false;
       }
-    },
+    });
+    const createPoll = (e) => {
+      e.preventDefault();
+      if (isValid.value) {
+        store.dispatch("polls/createPoll", { poll: form.value });
+        errors = { ...errors, ques: "", ansA: "", ansB: "" };
+        router.push("/polls");
+      } else {
+        if (form.value.ques === "") {
+          errors.ques = "Required Field";
+        } else {
+          errors.ques = "";
+        }
+        if (form.value.ansA === "") {
+          errors.ansA = "Required Field";
+        } else {
+          errors.ansA = "";
+        }
+        if (form.value.ansB === "") {
+          errors.ansB = "Required Field";
+        } else {
+          errors.ansB = "";
+        }
+      }
+    };
+
+    return {
+      form,
+      errors,
+      createPoll,
+      isValid,
+    };
   },
   components: {
     Button,
